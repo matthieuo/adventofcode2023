@@ -1,6 +1,9 @@
 use std::fs::read_to_string;
 use std::collections::HashSet;
 
+
+
+
 #[derive(Hash, Eq, PartialEq, Debug)]
 struct Grab {
     green: u32,
@@ -30,6 +33,7 @@ impl Grab {
 		red = s.split(" red").nth(0).unwrap()[1..].parse::<u32>().unwrap();
 	    }
 	}
+
 	Grab {green:gre,red:red,blue:blu}
     }
 }
@@ -38,7 +42,10 @@ impl Game {
 	let v = line.split("Game").nth(1).unwrap();
 	let id_game = v.split(":").nth(0).unwrap()[1..].parse::<u32>().unwrap();
 	let grabs: HashSet<Grab> = v.split(":").nth(1).unwrap().split(";").map(|s| Grab::from_txt(s)).collect();
+
+
 	Game {id:id_game, grabs: grabs}
+	
     }
 
     fn valid(&self, gr:u32, bl:u32,re:u32) -> bool {
@@ -60,6 +67,7 @@ impl Game {
 }
 
 pub fn day2(file_name: &str) -> (u32,u32) {
+
     let sum_id:u32 = read_to_string(file_name)
 	.unwrap()
 	.lines()
@@ -68,7 +76,7 @@ pub fn day2(file_name: &str) -> (u32,u32) {
 	.map(|g| g.id)
 	.sum();
 
-    let sum_max:u32 = read_to_string(file_name)
+        let sum_max:u32 = read_to_string(file_name)
 	.unwrap()
 	.lines()
 	.map(|l| Game::from_line(l))
@@ -76,4 +84,5 @@ pub fn day2(file_name: &str) -> (u32,u32) {
 	.sum();
     
     (sum_id,sum_max)
+    
 }
